@@ -1,0 +1,54 @@
+ .bg-wine {
+  background-image: url(https://previews.123rf.com/images/freeartist/freeartist1702/freeartist170200054/75680473-vista-panor%C3%A1mica-de-los-vi%C3%B1edos-de-piamonte-italia-.jpg);
+  width: 100%;
+  height: 15rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.navbar-btn {
+  border: none;
+}
+.navbar-btn :hover{
+  color: rgb(182, 45, 45);
+}
+.containerCards {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-auto-rows: 27rem;
+  grid-template-columns: repeat(auto-fit, 20rem);
+  justify-content: center;
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(201, 201, 201);
+  padding: 2rem;
+  border-radius: 1rem;
+  height: 400px;
+}
+.card .product-discount-label{
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 5px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.card:hover {
+  -ms-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1); 
+}
+.container__image img {
+  width: 100%;
+  object-fit: contain;
+}
+.card-title {
+  font-size: 1rem;
+}
