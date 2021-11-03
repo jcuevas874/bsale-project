@@ -1,14 +1,9 @@
-const host = "https://back-end-bsale.herokuapp.com/";
-
-export const cardsComponent = async (categoryName = null, sortBy = null) => {
+export const cardsComponent = async (products = { results: [] }) => {
   const containerCards = document.createElement("div");
   containerCards.className = "containerCards m-5";
-  const url = categoryName ? `${host}categories/${categoryName.toLowerCase()}?sort=${sortBy}` : `${host}products?sort=${sortBy}`;
-  const result = await fetch(url);
-  const products = await result.json();
-  if (products.results.length > 0) {
+  if (!products.error && products.results.length > 0) {
     products.results.forEach((product) => {
-      const { id, name, url_image, price, discount, category } = product;
+      const { name, url_image, price, discount } = product;
       const cardsTemplate = `
              <div class="card" style="width: 18rem;">
              <div class="container_image">
@@ -45,27 +40,10 @@ export const cardsComponent = async (categoryName = null, sortBy = null) => {
            </div>`;
       containerCards.innerHTML += cardsTemplate;
     });
+  } else {
+    const cardsTemplate = `<h1>No hay Productos!!!</h1>`;
+    containerCards.innerHTML += cardsTemplate;
   }
-  // TODO:
-  // search incomplete
-  /*  const formSearchBox = document.querySelector(".form_search");
-        const searchBox = document.querySelector(".search-input");
-      
-         const searchProducts = (data) => {
-          const dataProducts = data.results;
-          formSearchBox.addEventListener("keyup", async (e) => {
-            e.preventDefault();
-            const searchBoxValue = searchBox.value.toLowerCase();
-             const productSearched = dataProducts.filter(item => {
-              const productData = item.name.toLowerCase();
-              if (productData.indexOf(searchBoxValue) !== -1) {
-                return item;
-              }
-            }) 
-            await cardsComponent(null, null, {results: productSearched})
-          })
-        }
-        searchProducts(products); */
 
   return containerCards;
 };
