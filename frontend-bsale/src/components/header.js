@@ -5,7 +5,7 @@ const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 export const headerComponent = async () => {
   const containerHeader = document.querySelector(".containerHeader");
-  const categories = await fetchData('/categories');
+  const categories = await fetchData("/categories");
   let categoryOptions = "";
   categories.forEach((category) => {
     const { id, name } = category;
@@ -30,7 +30,7 @@ export const headerComponent = async () => {
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      < class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
       <select class="form-select bg-black border border-dark text-white categories" aria-label="Default select example">
@@ -49,19 +49,19 @@ export const headerComponent = async () => {
       </select>
       </li>
       </ul>
+      <div>
       <form class="form_search d-flex me-2">
       <input class="form-control text-white bg-black border border-dark search-input" type="search" placeholder="Search..." aria-label="Search">
       <button class="navbar-btn btn bg-dark bg-gradient text-white-50" type="submit"><i class="fa fa-search"></i></button>
       </form>
+      <span id="errors" class="text-danger"></span>
+      </div>
       <button class="navbar-btn bg-dark text-white-50">
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
       <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
       </svg>
       </button>
       </div>
-      </div>
-      <div>
-      <span id="errors" class="text-danger"></span>
       </div>
       </nav>
       </header>
@@ -72,24 +72,28 @@ export const headerComponent = async () => {
   const sortBy = containerHeader.querySelector(".sortBy");
   selectCategories.addEventListener("change", async (e) => {
     sortBy.selectedIndex = "";
-    const selectedCategoryValue = selectCategories.options[selectCategories.selectedIndex].value;
+    const selectedCategoryValue =
+      selectCategories.options[selectCategories.selectedIndex].value;
     let productData;
-    if (selectedCategoryValue !== '0') {
+    if (selectedCategoryValue !== "0") {
       productData = await fetchData(`/categories/${selectedCategoryValue}`);
     } else {
-      productData = await fetchData(`/products`)
+      productData = await fetchData(`/products`);
     }
     await mainComponent(productData);
   });
 
   sortBy.addEventListener("change", async (e) => {
-    const selectedCategoryValue = selectCategories.options[selectCategories.selectedIndex].value;
+    const selectedCategoryValue =
+      selectCategories.options[selectCategories.selectedIndex].value;
     const sortBy = e.target.value;
     let productData;
-    if (selectedCategoryValue !== '0') {
-      productData = await fetchData(`/categories/${selectedCategoryValue}?sort=${sortBy}`);
+    if (selectedCategoryValue !== "0") {
+      productData = await fetchData(
+        `/categories/${selectedCategoryValue}?sort=${sortBy}`
+      );
     } else {
-      productData = await fetchData(`/products?sort=${sortBy}`)
+      productData = await fetchData(`/products?sort=${sortBy}`);
     }
     await mainComponent(productData);
   });
@@ -99,17 +103,20 @@ export const headerComponent = async () => {
   formSearchBox.addEventListener("submit", async (e) => {
     e.preventDefault();
     errorsP.textContent = undefined;
-    const searchValue =  e.target[0].value;
-    let selectedCategoryValue = selectCategories.options[selectCategories.selectedIndex].value;
+    const searchValue = e.target[0].value;
+    let selectedCategoryValue =
+      selectCategories.options[selectCategories.selectedIndex].value;
     const selectedSortValue = sortBy.options[sortBy.selectedIndex].value;
     let productData;
-    if (selectedCategoryValue === '0') {
+    if (selectedCategoryValue === "0") {
       selectedCategoryValue = undefined;
     }
     if (searchValue.length >= 2) {
-      productData = await fetchData(`/searchs/${searchValue}/category/${selectedCategoryValue}?sort=${selectedSortValue}`);
+      productData = await fetchData(
+        `/searchs/${searchValue}/category/${selectedCategoryValue}?sort=${selectedSortValue}`
+      );
     } else {
-      errorsP.textContent = 'La busqueda requiere minimo 3 letras!'
+      errorsP.textContent = "La búsqueda requiere mínimo dos letras!";
     }
     await mainComponent(productData);
   });
