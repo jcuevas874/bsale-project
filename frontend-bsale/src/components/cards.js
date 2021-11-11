@@ -1,8 +1,8 @@
 export const cardsComponent = async (products = { results: [] }) => {
   const containerCards = document.createElement("div");
   containerCards.className = "containerCards m-5";
-  if (!products.error && products.results.length > 0) {
-    products.results.forEach((product) => {
+  if (!products.error && products.length > 0) {
+    products.forEach((product) => {
       const { name, url_image, price, discount } = product;
       const cardsTemplate = `
              <div class="card" style="width: 18rem;">
@@ -41,7 +41,10 @@ export const cardsComponent = async (products = { results: [] }) => {
       containerCards.innerHTML += cardsTemplate;
     });
   } else {
-    const cardsTemplate = `<h1>No hay Productos!!!</h1>`;
+    const cardsTemplate = `<div class="d-flex flex-column justify-content-center align-item-center"> 
+                              <h1 class="text-center">No hay Productos!!!</h1>                          
+                             <a href="/" class="btn btn-outline-secondary refresh">REGRESAR</a>
+                          </div>`;
     containerCards.innerHTML += cardsTemplate;
   }
 

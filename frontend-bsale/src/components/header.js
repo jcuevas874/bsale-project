@@ -1,5 +1,6 @@
 import { fetchData } from "../scripts/fetchData.js";
 import { mainComponent } from "./main.js";
+import { cardsComponent } from "./cards.js";
 
 const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -76,7 +77,7 @@ export const headerComponent = async () => {
       selectCategories.options[selectCategories.selectedIndex].value;
     let productData;
     if (selectedCategoryValue !== "0") {
-      productData = await fetchData(`/categories/${selectedCategoryValue}`);
+      productData = await fetchData(`/products/${selectedCategoryValue}`);
     } else {
       productData = await fetchData(`/products`);
     }
@@ -90,7 +91,7 @@ export const headerComponent = async () => {
     let productData;
     if (selectedCategoryValue !== "0") {
       productData = await fetchData(
-        `/categories/${selectedCategoryValue}?sort=${sortBy}`
+        `/products/${selectedCategoryValue}?sort=${sortBy}`
       );
     } else {
       productData = await fetchData(`/products?sort=${sortBy}`);
@@ -98,7 +99,7 @@ export const headerComponent = async () => {
     await mainComponent(productData);
   });
 
-  const formSearchBox = document.querySelector(".form_search");
+  const formSearchBox = document.querySelector(".form_search"); 
   const errorsP = document.querySelector("#errors");
   formSearchBox.addEventListener("submit", async (e) => {
     e.preventDefault();

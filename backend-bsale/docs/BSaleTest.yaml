@@ -1,0 +1,190 @@
+---
+openapi: 3.0.0
+info:
+  title: BSale API
+  description: Challenge by BSale for a Full Stack Jr Developer position called `Online Store Backend` by creating a Microservice using NODEJS with 4 Endpoints.
+  contact:
+    name: Jesus Cuevas
+    url: https://github.com/jcuevas874/bsale-project
+    email: jcuevas874@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.1"
+tags:
+- name: Product
+  description: Search all the products in Database
+- name: Categories
+  description: Search all the Categories in Database
+- name: Products by Categories
+  description: Search all the Products and filter by Category
+- name: SearchBox
+  description: Search any product written in the searchBox in the Database
+paths:
+  /products:
+    get:
+      tags:
+      - Product
+      summary: Search products in DB
+      description: Search all the products in Database
+      parameters:
+      - name: product
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400":
+          description: Invalid status value
+      security: []
+  /categories:
+    get:
+      tags:
+      - Categories
+      summary: Search all the categories in Database
+      description: Returns all the categories
+      parameters:
+      - name: categories
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categories'
+        "400":
+          description: Bad Request
+      security: []
+  /products/:category:
+    get:
+      tags:
+      - Products by Categories
+      summary: Search in database the products by categories
+      description: Returns the products by categories
+      parameters:
+      - name: Products
+        in: path
+        description: Products
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category
+        in: header
+        description: Category ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400":
+          description: Bad Request
+      security: []
+  //searchs/:searchValue/category/:category:
+    get:
+      tags:
+      - SearchBox
+      summary: Search word in database
+      description: Returns data in Database searched by the word in the searchBox
+      parameters:
+      - name: searchValue
+        in: path
+        description: word to search
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category
+        in: path
+        description: search word by category
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400":
+          description: Bad Request
+      security: []
+components:
+  schemas:
+    Product:
+      required:
+      - id
+      - name
+      - url_image
+      - price
+      - discount
+      - category
+      - c
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Bebida Sprite 1Lt"
+        url_image:
+          type: string
+          example: "https://dojiw2m9tvv09.cloudfront.net/11132/product/absolut21381.png"
+        price:
+          type: integer
+          example: 1250
+        discount:
+          type: integer
+          example: 10
+        category:
+          type: string
+          example: "bebida"
+        c:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 1
+            name:
+              type: string
+              example: "Bebida"
+    Categories:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "bebida"
+      
